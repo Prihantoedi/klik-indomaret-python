@@ -15,10 +15,14 @@ def fetchTitlePrice(mySoup, myTag, className, myData, productNum, baseUrl):
         childContent = div.contents[1] 
         title = childContent.find("div", {"class" : "title"})
         price = childContent.find("span", {"class" : "normal price-value"})
+        image = childContent.find("img", {"class": "lazy"})
+        # print(childContent)
+        # print("=====================")
+        
     
         # get title, price and product link
         if title:
-            myData[key + str(productNum)] = {"title" : title.text.replace("\n", ""), "price" : price.text, "link" : baseUrl + div.a["href"]}
+            myData[key + str(productNum)] = {"title" : title.text.replace("\n", ""), "price" : price.text, "img" : image["data-src"], "link" : baseUrl + div.a["href"]}
             productNum+=1
 
     return myData, productNum

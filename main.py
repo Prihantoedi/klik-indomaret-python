@@ -20,9 +20,8 @@ def search_product():
     keyword = request.args.get("product-name")
     
     getProductsInfo = fetchProductInfo(keyword)
+    # print(getProductsInfo)
     return getProductsInfo, 200
-
-
 
 if __name__ == "__main__":
     app.run()
