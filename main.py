@@ -3,7 +3,7 @@ from flask import request
 
 from flask.globals import request
 
-from scrapper import fetchProductInfo
+from scrapper import fetchProducts
 
 
 app = Flask(__name__)
@@ -14,7 +14,7 @@ app.config["DEBUG"] = True # do not use this in production level
 @app.route("/api/v1/search/products", methods=["GET"])
 def search_product():
     keyword = request.args.get("product-name")    
-    getProductsInfo = fetchProductInfo(keyword)
+    getProductsInfo = fetchProducts(keyword)
 
     return getProductsInfo, 200
 

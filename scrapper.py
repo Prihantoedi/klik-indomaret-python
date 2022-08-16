@@ -8,7 +8,7 @@ import urllib.request
 
 
 
-def fetchSpecificInfo(mySoup, myTag, className, myData, productNum, baseUrl):
+def fetchProductInfo(mySoup, myTag, className, myData, productNum, baseUrl):
     key = "product_"
 
     for div in mySoup.find_all(myTag, {"class" : className}):
@@ -28,7 +28,7 @@ def fetchSpecificInfo(mySoup, myTag, className, myData, productNum, baseUrl):
     return myData, productNum
 
 
-def fetchProductInfo(keyword):
+def fetchProducts(keyword):
     base_url = "https://www.klikindomaret.com"
 
     if " " in keyword:
@@ -51,7 +51,7 @@ def fetchProductInfo(keyword):
 
     newSource = ""
     while nextPage:
-        data, prodNum = fetchSpecificInfo(soup, "div", "item", data, prodNum, base_url)
+        data, prodNum = fetchProductInfo(soup, "div", "item", data, prodNum, base_url)
 
         for a in soup.find_all("a"):
             
