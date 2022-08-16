@@ -14,6 +14,7 @@ app.config["DEBUG"] = True # do not use this in production level
 # getInfo = scrapPageContent(keyword)
 
 
+# use the route like this: /api/v1/search/products?product-name=yourproductname
 @app.route("/api/v1/search/products", methods=["GET"])
 def search_product():
     keyword = request.args.get("product-name")
