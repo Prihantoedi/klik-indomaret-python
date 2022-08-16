@@ -8,7 +8,7 @@ import urllib.request
 
 
 
-def fetchTitlePrice(mySoup, myTag, className, myData, productNum, baseUrl):
+def fetchSpecificInfo(mySoup, myTag, className, myData, productNum, baseUrl):
     key = "product_"
 
     for div in mySoup.find_all(myTag, {"class" : className}):
@@ -51,7 +51,7 @@ def fetchProductInfo(keyword):
 
     newSource = ""
     while nextPage:
-        data, prodNum = fetchTitlePrice(soup, "div", "item", data, prodNum, base_url)
+        data, prodNum = fetchSpecificInfo(soup, "div", "item", data, prodNum, base_url)
 
         for a in soup.find_all("a"):
             

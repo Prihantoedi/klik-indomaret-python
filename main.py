@@ -10,17 +10,12 @@ app = Flask(__name__)
 
 app.config["DEBUG"] = True # do not use this in production level
 
-# keyword = input("input your keyword here:")
-# getInfo = scrapPageContent(keyword)
-
-
 # use the route like this: /api/v1/search/products?product-name=yourproductname
 @app.route("/api/v1/search/products", methods=["GET"])
 def search_product():
-    keyword = request.args.get("product-name")
-    
+    keyword = request.args.get("product-name")    
     getProductsInfo = fetchProductInfo(keyword)
-    # print(getProductsInfo)
+
     return getProductsInfo, 200
 
 if __name__ == "__main__":
