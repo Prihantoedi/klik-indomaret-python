@@ -1,33 +1,27 @@
-# import requests
+from flask import Flask
+from flask import request
 
-import bs4 as bs
+from flask.globals import request
 
-import urllib.request
+from scrapper import fetchProductInfo
 
 
-base_url = "https://www.klikindomaret.com"
-keyword = "sabun"
-source = urllib.request.urlopen(base_url + "/search/?key=" + keyword)
-soup = bs.BeautifulSoup(source, "lxml")
+app = Flask(__name__)
 
-data = {"title" : [], "price" : [], "link": []}
-for div in soup.find_all("div", class_="item"):
+app.config["DEBUG"] = True # do not use this in production level
+
+# keyword = input("input your keyword here:")
+# getInfo = scrapPageContent(keyword)
+
+
+@app.route("/api/v1/search/products", methods=["GET"])
+def search_product():
+    keyword = request.args.get("product-name")
     
-    childContent = div.contents[1]
-    title = childContent.find("div", {"class" : "title"})
-    price = childContent.find("span", {"class" : "normal price-value"})
-    # print(childContent)
-    # link = childContent.find("a", href=True)
-    # if link:
-    #     print(link["href"])
-    # print("=======================")
+    getProductsInfo = fetchProductInfo(keyword)
+    return getProductsInfo, 200
 
 
-    if title:
-        data["title"].append(title.text.replace("\n", ""))
-        data["price"].append(price.text)
-        # data["link"].append(link["href"])
 
-
-# print(data)
-
+if __name__ == "__main__":
+    app.run()
