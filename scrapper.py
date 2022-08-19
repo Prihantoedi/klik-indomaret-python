@@ -35,11 +35,11 @@ def fetchProducts(keyword):
 
     url_with_keyword = base_url + "/search/?key=" + keyword
 
-    # try:
-    #     source = urllib.request.urlopen(url_with_keyword)
-    #     soup = bs.BeautifulSoup(source, "lxml")
-    # except:
-    #     return {"error" : "Page not found"}, 404
+    try:
+        source = urllib.request.urlopen(url_with_keyword)
+        soup = bs.BeautifulSoup(source, "lxml")
+    except:
+        return {"Error" : "False Page"},
 
     source = urllib.request.urlopen(url_with_keyword)
     soup = bs.BeautifulSoup(source, "lxml")
@@ -83,8 +83,11 @@ def fetchProducts(keyword):
 def productDetail(urlTarget):
 
     # target = "https://www.klikindomaret.com/product/doremi-hairandbody-wash-moisturizing"
-    src = urllib.request.urlopen(urlTarget)
-    sp = bs.BeautifulSoup(src, "lxml")
+    try:
+        src = urllib.request.urlopen(urlTarget)
+        sp = bs.BeautifulSoup(src, "lxml")
+    except:
+        return {"Error" : "False Page"}
 
     description = []
     for div_desc in sp.find_all("span", {"class" : "spec_label"}):
