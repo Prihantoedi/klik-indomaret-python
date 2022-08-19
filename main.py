@@ -3,7 +3,7 @@ from flask import request
 
 from flask.globals import request
 
-from scrapper import fetchProducts
+from scrapper import fetchProducts, productDetail
 
 
 app = Flask(__name__)
@@ -17,6 +17,13 @@ def search_product():
     getProductsInfo = fetchProducts(keyword)
 
     return getProductsInfo, 200
+
+@app.route("/api/v1/product/detail", methods=["GET"])
+def product_detail():
+    target = request.args.get("target-link")
+    getProductDetail = productDetail(target)
+    
+    return getProductDetail, 200
 
 if __name__ == "__main__":
     app.run()

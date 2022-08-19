@@ -8,6 +8,7 @@ import urllib.request
 
 
 
+
 def fetchProductInfo(mySoup, myTag, className, myData, productNum, baseUrl):
     key = "product_"
 
@@ -79,3 +80,38 @@ def fetchProducts(keyword):
         return {"error" : "product not found"}
     else:
         return jsonify(data)
+
+
+def productDetail(urlTarget):
+
+    # target = "https://www.klikindomaret.com/product/doremi-hairandbody-wash-moisturizing"
+    src = urllib.request.urlopen(urlTarget)
+    sp = bs.BeautifulSoup(src, "lxml")
+
+    description = []
+    for div_desc in sp.find_all("span", {"class" : "spec_label"}):
+        temp_desc = {}
+        temp_desc["spec_label"] = div_desc.text
+        nextSibling = div_desc.find_next("span")
+        temp_desc["spec_desc"] = nextSibling.text
+        description.append(temp_desc)
+
+
+    promotion = []
+
+    # print(description)
+    for div_prom in sp.find_all("div", {"id" : "information"}):
+        promInfo = div_prom.find_all("span")
+        temp = {}
+        if len(promInfo) > 1:
+            disc = promInfo[0].find("b")
+            temp["head"] = disc.text
+            temp["explain"] = promInfo[1].text
+        else:
+            temp["head"] = promInfo[0].text
+            temp["explain"] = ""
+        
+        promotion.append(temp)
+
+
+    return jsonify({"description": description, "promotion" : promotion})
