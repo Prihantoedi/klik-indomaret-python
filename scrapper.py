@@ -17,11 +17,9 @@ def fetchProductInfo(mySoup, myTag, className, myData, productNum, baseUrl):
         title = childContent.find("div", {"class" : "title"})
         price = childContent.find("span", {"class" : "normal price-value"})
         image = childContent.find("img", {"class": "lazy"})
-        # print(childContent)
-        # print("=====================")
         
     
-        # get title, price and product link
+        # get title, price, image, and product link
         if title:
             myData[key + str(productNum)] = {"title" : title.text.replace("\n", ""), "price" : price.text, "img" : image["data-src"], "link" : baseUrl + div.a["href"]}
             productNum+=1
@@ -99,7 +97,6 @@ def productDetail(urlTarget):
 
     promotion = []
 
-    # print(description)
     for div_prom in sp.find_all("div", {"id" : "information"}):
         promInfo = div_prom.find_all("span")
         temp = {}
